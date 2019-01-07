@@ -4,14 +4,14 @@ First, you should read what this repository is about: [Getting started](/GETTING
 
 # Courses Overview
 
-- [ ] [Getting started](/GETTINGSTARTED.md)
+- [x] [Getting started](/GETTINGSTARTED.md)
 
 
 ## git
 
 ### Basics
 
-- [ ] Overview: [/courses/git/basics/overview](/courses/git/basics/overview)
+- [x] Overview: [/courses/git/basics/overview](/courses/git/basics/overview)
 - [ ] Branches: [/courses/git/basics/branches](courses/git/basics/branches)
 - [ ] Merging: [/courses/git/basics/merging](courses/git/basics/merging)
 - [ ] Rebasing: [/courses/git/basics/rebasing](courses/git/basics/rebasing)
