@@ -12,7 +12,7 @@ First, you should read what this repository is about: [Getting started](/GETTING
 ### Basics
 
 - [x] Overview: [/courses/git/basics/overview](/courses/git/basics/overview)
-- [ ] Branches: [/courses/git/basics/branches](courses/git/basics/branches)
+- [x] Branches: [/courses/git/basics/branches](courses/git/basics/branches)
 - [ ] Merging: [/courses/git/basics/merging](courses/git/basics/merging)
 - [ ] Rebasing: [/courses/git/basics/rebasing](courses/git/basics/rebasing)
 - [ ] Syncing: [/courses/git/basics/syncing](courses/git/basics/syncing)
