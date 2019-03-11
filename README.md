@@ -40,7 +40,7 @@ First, you should read what this repository is about: [Getting started](/GETTING
 - [x] Data types: [/courses/js/basics/data-types](/courses/js/basics/data-types)
 - [x] Functions: [/courses/js/basics/functions](/courses/js/basics/functions)
 - [x] Classes: [/courses/js/basics/classes](/courses/js/basics/classes)
-- [ ] Error handling: [/courses/js/basics/error-handling](/courses/js/basics/error-handling)
+- [x] Error handling: [/courses/js/basics/error-handling](/courses/js/basics/error-handling)
 
 ### ES2015 (ES6)
 
