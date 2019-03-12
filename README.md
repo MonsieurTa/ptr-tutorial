@@ -49,7 +49,7 @@ Some of these points are covered in the **Basics** courses, but you'll find more
 - [x] Overview: [/courses/js/es2015/overview](/courses/js/es2015/overview)
 - [x] Arrows and `this`: [/courses/js/es2015/arrows](/courses/js/es2015/arrows)
 - [x] Classes: [/courses/js/es2015/classes](/courses/js/es2015/classes)
-- [ ] Template literals: [/courses/js/es2015/literals](/courses/js/es2015/literals)
+- [x] Template literals: [/courses/js/es2015/literals](/courses/js/es2015/literals)
 - [ ] Destructuring: [/courses/js/es2015/destructuring](/courses/js/es2015/destructuring)
 - [ ] Spread operator: [/courses/js/es2015/spread-operator](/courses/js/es2015/spread-operator)
 - [ ] Rest parameters: [/courses/js/es2015/rest-parameters](/courses/js/es2015/rest-parameters)
