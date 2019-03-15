@@ -57,7 +57,7 @@ Some of these points are covered in the **Basics** courses, but you'll find more
 - [x] Maps: [/courses/js/es2015/maps](/courses/js/es2015/maps)
 - [x] Sets: [/courses/js/es2015/sets](/courses/js/es2015/sets)
 - [x] Promises: [/courses/js/es2015/promises](/courses/js/es2015/promises)
-- [ ] Async/Await: [/courses/js/es2015/async-await](/courses/js/es2015/async-await) (Actually ES2017, but it follows the Promises course)
+- [x] Async/Await: [/courses/js/es2015/async-await](/courses/js/es2015/async-await) (Actually ES2017, but it follows the Promises course)
 
 ### Misc
 
