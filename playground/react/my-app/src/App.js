@@ -15,15 +15,39 @@ class Square extends Component {
 		if (this.state.value === null) {
 			this.setState({value: this.props.player});
 			this.props.updateBoard(id, this.props.player);
+			this.props.moveHandler(this.props.player, id);
 		}
 	}
 
 	render () {
 		return (
-			<button className='Square' onClick={() => this.fillSquare(this.id)}>
+			<button
+				className='Square'
+				onClick={this.props.winner === null ? () => this.fillSquare(this.id) : null}>
 				{this.state.value}
 			</button>
 		);
+	}
+}
+
+class History extends Component {
+	constructor(props) {
+		super(props);
+	}
+	
+	renderMove({player, x, y}) {
+		return (
+			<div className='Move'>
+				<p>Player: {player} in X: {x}, Y: {y}</p>
+			</div>
+		);
+	}
+
+	render() {
+		return (
+			<div className='Moves'>
+				{this.props.moves.map(this.renderMove)}
+			</div>);
 	}
 }
 
@@ -42,10 +66,9 @@ class Board extends Component {
 
 		square = value;
 		board[id] = square;
-		this.setState({squares: board}, () => {
-				this.winner = this.checkBoard(this.state.squares)
-			});
-		}
+		this.setState({squares: board});
+	}
+	
 	checkBoard(squares) {
 		const lines = [
 			[0, 1, 2],
@@ -73,13 +96,26 @@ class Board extends Component {
 				id={id}
 				player={this.props.player}
 				playerHandler={this.props.onClick}
+				moveHandler={this.props.moveHandler}
+				winner={this.winner}
 				updateBoard={this.updateBoard.bind(this)}/>
 		);
 	}
 
+	msgHandler() {
+		return (
+			this.winner === null ?
+				<p>Current player: {this.props.player}</p>
+			: <p>Winner: {this.winner}</p>
+		);
+	}
+
 	render () {
+		this.winner = this.checkBoard(this.state.squares);
+
 		return (
 			<div>
+				{this.msgHandler()}
 				<div className='board-row'>
 					{this.renderSquare(0)}
 					{this.renderSquare(1)}
@@ -103,7 +139,8 @@ class Game extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			player: 'X'
+			player: 'X',
+			moves: []
 		}
 	}
 
@@ -114,13 +151,25 @@ class Game extends Component {
 			this.setState({player: currPlayer === 'X' ? 'O' : 'X'});
 	}
 
+	addMove(player, squareId) {
+		let moves = [...this.state.moves];
+		let move = {
+			player: player,
+			x: squareId % 3,
+			y: parseInt(squareId / 3)
+		}
+		moves.push(move);
+		this.setState({moves: moves});
+	}
+
 	render () {
 		return (
 			<div>
-				<p>Current player: {this.state.player}</p>
 				<Board 
 					player={this.state.player}
-					onClick={this.playerTurnHandler.bind(this)} />
+					onClick={this.playerTurnHandler.bind(this)}
+					moveHandler={this.addMove.bind(this)}/>
+				<History moves={this.state.moves}/>
 			</div>
 		);
 	}

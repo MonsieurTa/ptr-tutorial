@@ -8,3 +8,14 @@
 	height: 50px;
 	font-size: 30px;
 }
+
+.Moves {
+	border: 1px solid;
+	width: 200px;
+}
+
+
+.Move {
+	border: 1px solid;
+	width: 200px;
+}
