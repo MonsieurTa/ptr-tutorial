@@ -116,7 +116,7 @@ class Board extends Component {
 		this.winner = this.checkBoard(this.state.squares);
 
 		return (
-			<div>
+			<div className='board'>
 				{this.msgHandler()}
 				<div className='board-row'>
 					{this.renderSquare(0)}
@@ -168,7 +168,7 @@ class Game extends Component {
 	render () {
 		return (
 			<div>
-				<Board 
+				<Board
 					player={this.state.player}
 					onClick={this.playerTurnHandler.bind(this)}
 					moveHandler={this.addMove.bind(this)}/>

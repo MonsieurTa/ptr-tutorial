@@ -1,0 +1,47 @@
+#wrapper {
+	height: 100vh;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.App {
+	width: 275px;
+	height: 400px;
+}
+
+.Calculator {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: black;
+}
+
+.CalcNum {
+	width: 25%;
+	height: 100%;
+	border: 1px solid;
+	font-size: 100%;
+}
+
+.CalcOp {
+	width: 25%;
+	height: 100%;
+	border: 1px solid;
+	font-size: 100%;
+	background: #ffa500;
+}
+
+.KeyRow {
+	display: table;
+	width: 100%;
+	height: 25%;
+}
+
+.Pad {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	height: 80%;
+}

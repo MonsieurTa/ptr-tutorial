@@ -3,6 +3,10 @@
 	display: table;
 }
 
+.board {
+	margin:10px;
+}
+
 .Square {
 	float: left;
 	width: 50px;
