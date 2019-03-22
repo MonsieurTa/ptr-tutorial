@@ -35,17 +35,17 @@ class History extends Component {
 		super(props);
 	}
 	
-	renderMove({player, x, y}) {
+	renderMove({player, x, y, id}) {
 		return (
-			<div className='Move'>
-				<p>Player: {player} in X: {x}, Y: {y}</p>
+			<div className='Move' key={id}>
+				<p className='custom'>{player}: [{x}, {y}]</p>
 			</div>
 		);
 	}
 
 	render() {
 		return (
-			<div className='Moves'>
+			<div>
 				{this.props.moves.map(this.renderMove)}
 			</div>);
 	}
@@ -104,9 +104,11 @@ class Board extends Component {
 
 	msgHandler() {
 		return (
-			this.winner === null ?
-				<p>Current player: {this.props.player}</p>
-			: <p>Winner: {this.winner}</p>
+			<div>
+				{this.winner === null ?
+					<p className='custom'>Current player: {this.props.player}</p>
+					: <p className='custom'>Winner: {this.winner}</p>}
+			</div>
 		);
 	}
 
@@ -156,7 +158,8 @@ class Game extends Component {
 		let move = {
 			player: player,
 			x: squareId % 3,
-			y: parseInt(squareId / 3)
+			y: parseInt(squareId / 3),
+			id: squareId
 		}
 		moves.push(move);
 		this.setState({moves: moves});

@@ -1,4 +1,5 @@
 .board-row {
+	margin: auto;
 	display: table;
 }
 
@@ -9,13 +10,12 @@
 	font-size: 30px;
 }
 
-.Moves {
+.Move {
+	margin: auto;
 	border: 1px solid;
 	width: 200px;
 }
 
-
-.Move {
-	border: 1px solid;
-	width: 200px;
+.custom {
+	text-align: center;
 }
