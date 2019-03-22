@@ -21,7 +21,7 @@ class Square extends Component {
 	render () {
 		return (
 			<button className='Square' onClick={() => this.fillSquare(this.id)}>
-			{this.state.value}
+				{this.state.value}
 			</button>
 		);
 	}
@@ -30,6 +30,7 @@ class Square extends Component {
 class Board extends Component {
 	constructor(props) {
 		super(props);
+		this.winner = null;
 		this.state = {
 			squares: Array(9).fill(null)
 		}
@@ -41,64 +42,58 @@ class Board extends Component {
 
 		square = value;
 		board[id] = square;
-		this.setState({squares: board});
+		this.setState({squares: board}, () => {
+				this.winner = this.checkBoard(this.state.squares)
+			});
+		}
+	checkBoard(squares) {
+		const lines = [
+			[0, 1, 2],
+			[3, 4, 5],
+			[6, 7, 8],
+			[0, 3, 6],
+			[1, 4, 7],
+			[2, 5, 8],
+			[0, 4, 8],
+			[2, 4, 6],
+		];
+
+		for (let i = 0; i < lines.length; i++) {
+			const [a, b, c] = lines[i];
+			if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+			  return squares[a];
+			}
+		}
+		return null;
+	}
+
+	renderSquare(id) {
+		return (
+			<Square
+				id={id}
+				player={this.props.player}
+				playerHandler={this.props.onClick}
+				updateBoard={this.updateBoard.bind(this)}/>
+		);
 	}
 
 	render () {
-		const	currPlayer = this.props.player;
-
 		return (
 			<div>
 				<div className='board-row'>
-					<Square
-						id='0'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
-					<Square
-						id='1'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
-					<Square
-						id='2'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
+					{this.renderSquare(0)}
+					{this.renderSquare(1)}
+					{this.renderSquare(2)}
 				</div>
 				<div className='board-row'>
-					<Square
-						id='3'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
-					<Square
-						id='4'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
-					<Square
-						id='5'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
+					{this.renderSquare(3)}
+					{this.renderSquare(4)}
+					{this.renderSquare(5)}
 				</div>
 				<div className='board-row'>
-					<Square
-						id='6'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
-					<Square
-						id='7'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
-					<Square
-						id='8'
-						player={currPlayer}
-						playerHandler={this.props.onClick}
-						updateBoard={this.updateBoard.bind(this)}/>
+					{this.renderSquare(6)}
+					{this.renderSquare(7)}
+					{this.renderSquare(8)}
 				</div>
 			</div>
 		);}
@@ -122,7 +117,7 @@ class Game extends Component {
 	render () {
 		return (
 			<div>
-				<p>Next turn: {this.state.player}</p>
+				<p>Current player: {this.state.player}</p>
 				<Board 
 					player={this.state.player}
 					onClick={this.playerTurnHandler.bind(this)} />
