@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import './calculator.css'
 
+const regDigit = new RegExp('^[0-9]$');
+const rows = [
+	['AC', '+/-', '%', '/'],
+	['7', '8', '9', 'X'],
+	['4', '5', '6', '-'],
+	['1', '2', '3', '+'],
+	['0', '.', '=']
+];
+
+const op = [
+	{op: '+', func: (a, b) => a + b},
+	{op: '-', func: (a, b) => a - b},
+	{op: 'X', func: (a, b) => a * b},
+	{op: '/', func: (a, b) => a / b},
+	{op: '%', func: (a, b) => a % b}
+];
+
 class CalcKey extends Component {
 	constructor(props) {
 		super(props);
@@ -8,53 +25,103 @@ class CalcKey extends Component {
 	}
 
 	render() {
-		return (<button className={this.props.style}>{this.value}</button>);
+		return (<button
+			style={this.props.style}
+			onClick={() => this.props.inputClickHandler(this.value)}>{this.value}</button>);
+	}
+}
+
+class CalcPad extends Component {
+	constructor(props){
+		super(props);
+		this.height = String(parseInt(100 / rows.length)) + '%';
+	}
+
+	generateRow(row, id) {
+		let rowStyle = {
+			width: '100%',
+			height: this.height
+		}
+
+		return (
+			<div style={rowStyle} key={id}>
+				{row.map(elem => this.generateKey(elem))}
+			</div>
+		);
+	}
+	generateKey(value) {
+		let keyStyle = {
+			width: value === '0' ? '50%' : '25%',
+			height: '100%',
+			border: '1px solid',
+			fontSize: '100%',
+			background: (regDigit.test(value) === true || value === '.') ? '#fff' : '#ffa500'
+		}
+
+		return (<CalcKey
+			value={value}
+			style={keyStyle}
+			key={value}
+			inputClickHandler={this.props.inputClickHandler}/>);
+	}
+
+	render () {
+		let padStyle = {
+			position: 'absolute',
+			bottom: '0px',
+			width: '100%',
+			height: '80%'
+		}
+
+		return (
+			<div style={padStyle}>
+				{rows.map((row, id) => this.generateRow(row, id))}
+			</div>
+		);
+	}
+}
+
+class Display  extends Component {
+	render() {
+		return (
+			<div className='Display'>
+				<div className='DisplayValue'>
+					{this.props.displayValue}
+				</div>
+			</div>
+		);
 	}
 }
 
 class Calculator extends Component {
-	generateKey(value) {
-		let num = new RegExp('^[0-9]$');
-
-		return (<CalcKey value={value} style={
-			num.test(value) === true ? 'CalcNum' : 'CalcOp'}/>);
+	constructor(props) {
+		super(props);
+		this.state = {
+			input: [],
+			operation: [],
+			result: 0,
+			displayValue: '0'
+		}
 	}
-	
-	generatePad() {
-		return (
-			<div className='Pad'>
-				<div className='KeyRow'>
-					{this.generateKey('AC')}
-					{this.generateKey('+/-')}
-					{this.generateKey('%')}
-					{this.generateKey('/')}
-				</div>
-				<div className='KeyRow'>
-					{this.generateKey('7')}
-					{this.generateKey('8')}
-					{this.generateKey('9')}
-					{this.generateKey('X')}
-				</div>
-				<div className='KeyRow'>
-					{this.generateKey('4')}
-					{this.generateKey('5')}
-					{this.generateKey('6')}
-					{this.generateKey('-')}
-				</div>
-				<div className='KeyRow'>
-					{this.generateKey('1')}
-					{this.generateKey('2')}
-					{this.generateKey('3')}
-					{this.generateKey('+')}
-				</div>
-			</div>
-		);
+
+	inputClickHandler(input) {
+		let currInput = [...this.state.input];
+
+		if (regDigit.test(input) === true || input === '.')
+			currInput.push(input);
+		currInput.join('');
+		this.setState({
+			input: currInput,
+			displayValue: currInput
+		});
 	}
 
 	render () {
 		return (
 			<div className='Calculator'>
-				{this.generatePad()}
+				<Display displayValue={this.state.displayValue}/>
+				<CalcPad
+					inputClickHandler={this.inputClickHandler.bind(this)}/>
 			</div>
 		);
 	}
