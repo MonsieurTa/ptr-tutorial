@@ -3,19 +3,19 @@ import './calculator.css'
 
 const regDigit = new RegExp('^[0-9]$');
 const rows = [
-	['AC', '+/-', '%', '/'],
+	['AC', 'CE', '%', '/'],
 	['7', '8', '9', 'X'],
 	['4', '5', '6', '-'],
 	['1', '2', '3', '+'],
 	['0', '.', '=']
 ];
 
-const op = [
+const operations = [
 	{op: '+', func: (a, b) => a + b},
 	{op: '-', func: (a, b) => a - b},
 	{op: 'X', func: (a, b) => a * b},
 	{op: '/', func: (a, b) => a / b},
-	{op: '%', func: (a, b) => a % b}
+	{op: '%', func: (a, b) => a % b},
 ];
 
 class CalcKey extends Component {
@@ -51,7 +51,7 @@ class CalcPad extends Component {
 	}
 	generateKey(value) {
 		let keyStyle = {
-			width: value === '0' ? '50%' : '25%',
+			width: (value === '0') ? '50%' : '25%',
 			height: '100%',
 			border: '1px solid',
 			fontSize: '100%',
@@ -83,9 +83,18 @@ class CalcPad extends Component {
 
 class Display  extends Component {
 	render() {
+		let displayValueStyle = {
+			position: 'absolute',
+			color: 'white',
+			fontSize: '50px',
+			marginTop: '-25px',
+			lineHeight: '100%',
+			top: '50%',
+			right: '0px'
+		}
 		return (
 			<div className='Display'>
-				<div className='DisplayValue'>
+				<div style={displayValueStyle}>
 					{this.props.displayValue}
 				</div>
 			</div>
@@ -97,22 +106,57 @@ class Calculator extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			input: [],
-			operation: [],
+			input: "",
+			operation: undefined,
 			result: 0,
 			displayValue: '0'
 		}
 	}
 
-	inputClickHandler(input) {
-		let currInput = [...this.state.input];
+	clearAll() {
+		this.setState({
+			input: "",
+			operation: undefined,
+			result: 0,
+			displayValue: '0'
+		});
+	}
 
-		if (regDigit.test(input) === true || input === '.')
-			currInput.push(input);
-		currInput.join('');
+	inputClickHandler(input) {
+		let currInput = this.state.input;
+		let currOperation = this.state.operation;
+		let currResult = this.state.result;
+		let currDisplayValue = this.state.displayValue;
+		let obj = operations.find(operation => operation.op === input);
+
+		if (regDigit.test(input) === true || input === '.') {
+			currInput += (currInput === '0' || currInput === "") ? input === '0' ? "" : input : input;
+			currDisplayValue = (currInput === "") ? '0' : currInput;
+		}
+		else if ((currInput.length > 0 && obj !== undefined) || input === '='){
+			if (currOperation === undefined) {
+				currResult = Number(currInput);
+			}
+			else {
+				currResult = currOperation.func(currResult, Number(currInput));
+			}
+			currInput = (input === '=') ? currInput : "";
+			currDisplayValue = String(currResult);
+			currOperation = (input === '=') ? currOperation : obj;
+		}
+		else if (input === 'AC') {
+			this.clearAll();
+			return ;
+		}
+		else if (input === 'CE') {
+			currInput = "";
+			currDisplayValue = '0';
+		}
 		this.setState({
 			input: currInput,
-			displayValue: currInput
+			operation: currOperation,
+			result: currResult,
+			displayValue: currDisplayValue
 		});
 	}
 
